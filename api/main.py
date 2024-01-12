@@ -21,7 +21,7 @@ app.add_middleware(
 )
 
 MODEL = tf.keras.models.load_model("C:/Users/Prathamesh/Downloads/PlantVillage/1")
-ClASS_NAMES = ["Early Blight", "Late Blight", "Healthy"]
+CLASS_NAMES = ["Early Blight", "Late Blight", "Healthy"]
 
 
 @app.get("/ping")
@@ -41,7 +41,7 @@ async def predict(
     image = read_file_as_image(await file.read())
     img_batch = np.expand_dims(image, 0)
     predictions = MODEL.predict(img_batch)
-    predicted_class = ClASS_NAMES[np.argmax(predictions[0])]
+    predicted_class = CLASS_NAMES[np.argmax(predictions[0])]
     confidence = np.max(predictions[0])
     return {
         'class': predicted_class,
